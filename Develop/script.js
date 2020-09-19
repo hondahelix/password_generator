@@ -9,10 +9,10 @@ var passwordData = ["abcdefghijklmopqrstuvwxyz","ABCDEFGHIJKLMNOPQRSTUV","012344
 // console.log(passwordData.special);
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+  generatePassword();
+  
 
-  passwordText.value = password;
+  //passwordText.value = password;
 
 }
 function generatePassword(){
@@ -22,10 +22,16 @@ function generatePassword(){
     charType.push(prompt("Include " + inputQ[i]));
     console.log(charType);
   }
-  if (validInput(pLen,charType===true)){
+  //checks to see if valif input if true then continues
+  if (validInput(pLen,charType)){
     var pass = make(pLen,charType);
     console.log(pass);
-    return pass;
+    var passwordText = document.querySelector("#password");
+    passwordText.value=pass;
+  }
+  else{
+    //restarts back to prompts
+    writePassword();
   }
 }
 //makes password
@@ -55,39 +61,54 @@ function make(x,y){
 function validInput(l,t){
   console.log(l);
   console.log(t);
+  var checkedNum = checkNum(l);
+  var checkedCase = checkCase(t);
+
+  if(checkedNum==true && checkedCase==true && NotAllNo(t)==true){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+//checks to see if number a valid input of between 8-128
+function checkNum(l){
   if((parseInt(l)<8) || (parseInt(l)>128)){
     alert("PICK A NUMBER 8 THROUGH 128!!!!");
-    generatePassword();
     console.log("1 failed");
+    return false;
   }
   else{
     return true;
   }
-
+}
+//checks to see if input is y or n
+function checkCase(t){
   for(var i=0; i<t.length; i++){
-    //console.log(t[i]);
-    console.log(t);
     if((t[i]==="y") || (t[i]==="n") ){
-      console.log("we made it");
-      if(t!==["n","n","n","n"]){
-        return true;
-      }
-      else{
-        console.log("3 failed")
-        alert("CANNOT ALL BE NO");
-        generatePassword();
-        return false;
-      }
-
+      return true;
     }
     else{
         alert("ANSWER y FOR YES AND n FOR NO!!");
-        generatePassword();
         //console.log("2 failed")
         return false;
     }
   }
-  
+}
+//checks if not all inputs are no
+function NotAllNo(t){
+  var stringOfInput = "";
+  for(var i =0; i<t.length;i++){
+    stringOfInput = stringOfInput+t[i];
+    console.log(stringOfInput)
+  }
+  if(stringOfInput==="nnnn"){
+    alert("CANNOT ALL BE NO");
+    return false;
+  }
+  else{
+    return true
+  }
 }
 
 
