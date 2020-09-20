@@ -58,10 +58,10 @@ function make(x,y){
 function validInput(l,t){
   console.log(l);
   console.log(t);
-  var checkedNum = checkNum(l);
-  var checkedCase = checkCase(t);
+  // var checkedNum = checkNum(l);
+  // var checkedCase = checkCase(t);
 
-  if(checkedNum==true && checkedCase==true && NotAllNo(t)==true){
+  if(checkNum(l)==true && checkCase(t)==true && NotAllNo(t)==true){
     return true;
   }
   else{
